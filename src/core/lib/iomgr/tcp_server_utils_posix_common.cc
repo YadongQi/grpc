@@ -41,6 +41,7 @@
 #include "src/core/lib/iomgr/sockaddr.h"
 #include "src/core/lib/iomgr/tcp_server_utils_posix.h"
 #include "src/core/lib/iomgr/unix_sockets_posix.h"
+#include "src/core/lib/iomgr/vsock.h"
 
 #define MIN_SAFE_ACCEPT_QUEUE_SIZE 100
 
@@ -156,7 +157,7 @@ grpc_error_handle grpc_tcp_server_prepare_socket(
 
   GPR_ASSERT(fd >= 0);
 
-  if (so_reuseport && !grpc_is_unix_socket(addr)) {
+  if (so_reuseport && !grpc_is_unix_socket(addr) && !grpc_is_vsock(addr)) {
     err = grpc_set_socket_reuse_port(fd, 1);
     if (!GRPC_ERROR_IS_NONE(err)) goto error;
   }
@@ -173,7 +174,7 @@ grpc_error_handle grpc_tcp_server_prepare_socket(
   if (!GRPC_ERROR_IS_NONE(err)) goto error;
   err = grpc_set_socket_cloexec(fd, 1);
   if (!GRPC_ERROR_IS_NONE(err)) goto error;
-  if (!grpc_is_unix_socket(addr)) {
+  if (!grpc_is_unix_socket(addr) && !grpc_is_vsock(addr)) {
     err = grpc_set_socket_low_latency(fd, 1);
     if (!GRPC_ERROR_IS_NONE(err)) goto error;
     err = grpc_set_socket_reuse_addr(fd, 1);

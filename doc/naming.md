@@ -49,6 +49,11 @@ Most gRPC implementations support the following URI schemes:
     as the first character; the implementation will prepend this null. Do not include
     the null in `abstract_path`.
 
+- `vsock:cid:port` -- VMCI(Virtual Machine Communication Interface) Sockets (Unix systems only)
+  - `cid` is the 32-bit Context Identifier.The cid identifies the
+    source or destination, which is either a virtual machine or the host.
+  - `port` is the port to use.
+
 The following schemes are supported by the gRPC C-core implementation,
 but may not be supported in other languages:
 

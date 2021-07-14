@@ -159,6 +159,11 @@ bool HttpProxyMapper::MapName(const char* server_uri,
             server_uri);
     return no_use_proxy();
   }
+  if (uri->scheme() == "vsock") {
+    gpr_log(GPR_INFO, "not using proxy for VSock '%s'",
+            server_uri);
+    return no_use_proxy();
+  }
   /* Prefer using 'no_grpc_proxy'. Fallback on 'no_proxy' if it is not set. */
   auto no_proxy_str = UniquePtr<char>(gpr_getenv("no_grpc_proxy"));
   if (no_proxy_str == nullptr) {

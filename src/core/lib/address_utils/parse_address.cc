@@ -25,6 +25,10 @@
 #ifdef GRPC_HAVE_UNIX_SOCKET
 #include <sys/un.h>
 #endif
+#ifdef GRPC_HAVE_VSOCK
+#include <sys/socket.h>
+#include <linux/vm_sockets.h>
+#endif
 #ifdef GRPC_POSIX_SOCKET
 #include <errno.h>
 #include <net/if.h>
@@ -145,6 +149,98 @@ grpc_error_handle UnixAbstractSockaddrPopulate(
 
 }  // namespace grpc_core
 #endif /* GRPC_HAVE_UNIX_SOCKET */
+
+#ifdef GRPC_HAVE_VSOCK
+
+bool grpc_parse_vsock(const grpc_core::URI& uri,
+                     grpc_resolved_address* resolved_addr) {
+  if (uri.scheme() != "vsock") {
+    gpr_log(GPR_ERROR, "Expected 'vsock' scheme, got '%s'",
+            uri.scheme().c_str());
+    return false;
+  }
+  grpc_error_handle error =
+      grpc_core::VSockaddrPopulate(uri.path(), resolved_addr);
+  if (error != GRPC_ERROR_NONE) {
+    gpr_log(GPR_ERROR, "%s", grpc_error_std_string(error).c_str());
+    GRPC_ERROR_UNREF(error);
+    return false;
+  }
+  return true;
+}
+
+namespace grpc_core {
+
+grpc_error_handle VSockaddrPopulate(absl::string_view cidport,
+                                       grpc_resolved_address* resolved_addr) {
+  struct sockaddr_vm* vm =
+      reinterpret_cast<struct sockaddr_vm*>(resolved_addr->addr);
+
+  vm->svm_family = AF_VSOCK;
+
+  //Split cid and port
+  std::string cid;
+  std::string port;
+  size_t colon = cidport.find(':');
+  if (colon != absl::string_view::npos &&
+        cidport.find(':', colon + 1) == absl::string_view::npos) {
+    cid = std::string(cidport.substr(0, colon));
+    port = std::string(cidport.substr(colon + 1, cidport.size() - colon - 1));
+  } else {
+    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
+             absl::StrCat("Failed split vsock cid/port: %s ",
+                    std::string(cidport).c_str()).c_str());
+  }
+
+  // Parse cid
+  if (cid.empty()) {
+    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
+             absl::StrCat("no vsock cid given for vsock scheme").c_str());
+  }
+  unsigned int cid_num;
+  if (sscanf(cid.c_str(), "%u", &cid_num) != 1) {
+    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
+             absl::StrCat("invalid vsock cid: '%s'",
+                    std::string(cid).c_str()).c_str());
+  }
+  vm->svm_cid = cid_num;
+
+  // Parse port
+  if (port.empty()) {
+    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
+             absl::StrCat("no vsock port given for vsock scheme").c_str());
+  }
+  unsigned int port_num;
+  if (sscanf(port.c_str(), "%u", &port_num) != 1) {
+    return GRPC_ERROR_CREATE_FROM_COPIED_STRING(
+             absl::StrCat("invalid vsock port: '%s'",
+                    std::string(cid).c_str()).c_str());
+  }
+  vm->svm_port = port_num;
+
+  resolved_addr->len = static_cast<socklen_t>(sizeof(*vm));
+  return GRPC_ERROR_NONE;
+}
+
+}  // namespace grpc_core
+
+#else  /* GRPC_HAVE_VSOCK */
+
+bool grpc_parse_vsock(const grpc_core::URI& /* uri */,
+                     grpc_resolved_address* /* resolved_addr */) {
+  abort();
+}
+
+namespace grpc_core {
+
+grpc_error_handle VSockaddrPopulate(
+    absl::string_view /* path */, grpc_resolved_address* /* resolved_addr */) {
+  abort();
+}
+
+}  // namespace grpc_core
+#endif /* GRPC_HAVE_VSOCK */
+
 
 bool grpc_parse_ipv4_hostport(absl::string_view hostport,
                               grpc_resolved_address* addr, bool log_errors) {
@@ -300,6 +396,9 @@ bool grpc_parse_uri(const grpc_core::URI& uri,
   }
   if (uri.scheme() == "unix-abstract") {
     return grpc_parse_unix_abstract(uri, resolved_addr);
+  }
+  if (uri.scheme() == "vsock") {
+    return grpc_parse_vsock(uri, resolved_addr);
   }
   if (uri.scheme() == "ipv4") {
     return grpc_parse_ipv4(uri, resolved_addr);

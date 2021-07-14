@@ -50,6 +50,7 @@
 #include "src/core/lib/iomgr/resolve_address.h"
 #include "src/core/lib/iomgr/tcp_server.h"
 #include "src/core/lib/iomgr/unix_sockets_posix.h"
+#include "src/core/lib/iomgr/vsock.h"
 #include "src/core/lib/resource_quota/api.h"
 #include "src/core/lib/resource_quota/memory_quota.h"
 #include "src/core/lib/slice/slice_internal.h"
@@ -63,6 +64,7 @@ namespace {
 
 const char kUnixUriPrefix[] = "unix:";
 const char kUnixAbstractUriPrefix[] = "unix-abstract:";
+const char kVSockUriPrefix[] = "vsock:";
 
 class Chttp2ServerListener : public Server::ListenerInterface {
  public:
@@ -901,6 +903,8 @@ grpc_error_handle Chttp2ServerAddPort(Server* server, const char* addr,
                                    kUnixAbstractUriPrefix)) {
       resolved_or =
           grpc_resolve_unix_abstract_domain_address(parsed_addr_unprefixed);
+    } else if (absl::ConsumePrefix(&parsed_addr_unprefixed, kVSockUriPrefix)) {
+      resolved_or = grpc_resolve_vsock_address(parsed_addr_unprefixed);
     } else {
       resolved_or = GetDNSResolver()->ResolveNameBlocking(parsed_addr, "https");
     }

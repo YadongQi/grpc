@@ -144,6 +144,11 @@ class HttpProxyMapper : public ProxyMapperInterface {
               server_uri);
       goto no_use_proxy;
     }
+    if (uri->scheme() == "vsock") {
+      gpr_log(GPR_INFO, "not using proxy for VSock '%s'",
+              server_uri);
+      goto no_use_proxy;
+    }
     /* Prefer using 'no_grpc_proxy'. Fallback on 'no_proxy' if it is not set. */
     no_proxy_str = gpr_getenv("no_grpc_proxy");
     if (no_proxy_str == nullptr) no_proxy_str = gpr_getenv("no_proxy");

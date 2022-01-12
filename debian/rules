@@ -1,0 +1,39 @@
+#!/usr/bin/make -f
+# You must remove unused comment lines for the released package.
+#export DH_VERBOSE = 1
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+#export DEB_CFLAGS_MAINT_APPEND  = -Wall -pedantic
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+export gRPC_BUILD_TESTS=OFF
+export gRPC_INSTALL=ON
+export INSTALL_DIR_TMP=$(CURDIR)/debian/tmp
+export CFLAGS=
+export CPPFLAGS=
+export CXXFLAGS=
+
+%:
+	dh $@ --buildsystem=cmake
+	#dh $@ --buildsystem=cmake --builddir=cmake/build
+
+override_dh_auto_configure:
+	env | sort
+#	echo "yadong: $(CURDIR)"
+#	mkdir -p cmake/build
+#	mkdir -p $(INSTALL_DIR_TMP)
+#	cd cmake/build && cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$(INSTALL_DIR_TMP) ../..
+	dh_auto_configure --buildsystem=cmake --sourcedir=$(CURDIR) --builddir=cmake/build
+	dh_auto_configure --buildsystem=cmake --sourcedir=$(CURDIR)/third_party/abseil-cpp --builddir=$(CURDIR)/third_party/abseil-cpp/cmake/build
+
+override_dh_auto_build:
+#	echo "yadong: $(CURDIR)"
+#	cd cmake/build && make -j
+	dh_auto_build --buildsystem=cmake --sourcedir=$(CURDIR) --builddir=cmake/build
+	dh_auto_build --buildsystem=cmake --sourcedir=$(CURDIR)/third_party/abseil-cpp/ --builddir=$(CURDIR)/third_party/abseil-cpp/cmake/build
+
+override_dh_auto_test:
+	#skip
+	echo "SKIP autotest"
+
+override_dh_auto_install:
+	dh_auto_install --buildsystem=cmake --sourcedir=$(CURDIR) --builddir=cmake/build
+	dh_auto_install --buildsystem=cmake --sourcedir=$(CURDIR)/third_party/abseil-cpp/ --builddir=$(CURDIR)/third_party/abseil-cpp/cmake/build

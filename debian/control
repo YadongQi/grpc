@@ -1,0 +1,19 @@
+Source: grpc
+Section: admin
+Priority: optional
+Maintainer: gRPC authors <>
+Build-Depends:
+ cmake (>=3.13),
+ debhelper (>=10),
+ libtool,
+ autoconf,
+ pkg-config
+Standards-Version: 3.9.8
+Homepage: https://github.com/grpc/grpc
+
+Package: grpc
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: gRPC
+ gRPC - An RPC library and framework

@@ -803,6 +803,7 @@ libs:
   - src/core/lib/iomgr/timer_heap.h
   - src/core/lib/iomgr/timer_manager.h
   - src/core/lib/iomgr/unix_sockets_posix.h
+  - src/core/lib/iomgr/vsock.h
   - src/core/lib/iomgr/wakeup_fd_pipe.h
   - src/core/lib/iomgr/wakeup_fd_posix.h
   - src/core/lib/json/json.h
@@ -1579,6 +1580,7 @@ libs:
   - src/core/lib/iomgr/timer_manager.cc
   - src/core/lib/iomgr/unix_sockets_posix.cc
   - src/core/lib/iomgr/unix_sockets_posix_noop.cc
+  - src/core/lib/iomgr/vsock.cc
   - src/core/lib/iomgr/wakeup_fd_eventfd.cc
   - src/core/lib/iomgr/wakeup_fd_nospecial.cc
   - src/core/lib/iomgr/wakeup_fd_pipe.cc
@@ -2151,6 +2153,7 @@ libs:
   - src/core/lib/iomgr/timer_heap.h
   - src/core/lib/iomgr/timer_manager.h
   - src/core/lib/iomgr/unix_sockets_posix.h
+  - src/core/lib/iomgr/vsock.h
   - src/core/lib/iomgr/wakeup_fd_pipe.h
   - src/core/lib/iomgr/wakeup_fd_posix.h
   - src/core/lib/json/json.h
@@ -2541,6 +2544,7 @@ libs:
   - src/core/lib/iomgr/timer_manager.cc
   - src/core/lib/iomgr/unix_sockets_posix.cc
   - src/core/lib/iomgr/unix_sockets_posix_noop.cc
+  - src/core/lib/iomgr/vsock.cc
   - src/core/lib/iomgr/wakeup_fd_eventfd.cc
   - src/core/lib/iomgr/wakeup_fd_nospecial.cc
   - src/core/lib/iomgr/wakeup_fd_pipe.cc
@@ -3622,6 +3626,7 @@ libs:
   - src/core/lib/iomgr/timer_heap.h
   - src/core/lib/iomgr/timer_manager.h
   - src/core/lib/iomgr/unix_sockets_posix.h
+  - src/core/lib/iomgr/vsock.h
   - src/core/lib/iomgr/wakeup_fd_pipe.h
   - src/core/lib/iomgr/wakeup_fd_posix.h
   - src/core/lib/json/json.h
@@ -3893,6 +3898,7 @@ libs:
   - src/core/lib/iomgr/timer_manager.cc
   - src/core/lib/iomgr/unix_sockets_posix.cc
   - src/core/lib/iomgr/unix_sockets_posix_noop.cc
+  - src/core/lib/iomgr/vsock.cc
   - src/core/lib/iomgr/wakeup_fd_eventfd.cc
   - src/core/lib/iomgr/wakeup_fd_nospecial.cc
   - src/core/lib/iomgr/wakeup_fd_pipe.cc
@@ -7558,6 +7564,7 @@ targets:
   - src/core/lib/iomgr/timer_heap.h
   - src/core/lib/iomgr/timer_manager.h
   - src/core/lib/iomgr/unix_sockets_posix.h
+  - src/core/lib/iomgr/vsock.h
   - src/core/lib/iomgr/wakeup_fd_pipe.h
   - src/core/lib/iomgr/wakeup_fd_posix.h
   - src/core/lib/json/json.h
@@ -7812,6 +7819,7 @@ targets:
   - src/core/lib/iomgr/timer_manager.cc
   - src/core/lib/iomgr/unix_sockets_posix.cc
   - src/core/lib/iomgr/unix_sockets_posix_noop.cc
+  - src/core/lib/iomgr/vsock.cc
   - src/core/lib/iomgr/wakeup_fd_eventfd.cc
   - src/core/lib/iomgr/wakeup_fd_nospecial.cc
   - src/core/lib/iomgr/wakeup_fd_pipe.cc

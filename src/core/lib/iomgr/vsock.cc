@@ -21,11 +21,11 @@
 
 #ifdef GRPC_HAVE_VSOCK
 
+#include <linux/vm_sockets.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <linux/vm_sockets.h>
 
 #include "absl/strings/str_cat.h"
 

@@ -4931,6 +4931,7 @@ grpc_cc_library(
         "ext/filters/client_channel/resolver/sockaddr/sockaddr_resolver.cc",
     ],
     external_deps = [
+        "absl/memory",
         "absl/status:statusor",
         "absl/strings",
     ],

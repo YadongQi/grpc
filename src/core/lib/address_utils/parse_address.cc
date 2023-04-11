@@ -188,7 +188,7 @@ grpc_error_handle VSockaddrPopulate(absl::string_view path,
 
 }  // namespace grpc_core
 
-#else  // GRPC_HAVE_VSOCK
+#else   // GRPC_HAVE_VSOCK
 
 bool grpc_parse_vsock(const grpc_core::URI& /* uri */,
                       grpc_resolved_address* /* resolved_addr */) {

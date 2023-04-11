@@ -21,11 +21,11 @@
 
 #ifdef GRPC_HAVE_VSOCK
 
+#include <linux/vm_sockets.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <linux/vm_sockets.h>
 
 #include "absl/strings/str_cat.h"
 
@@ -43,8 +43,8 @@ void grpc_create_socketpair_if_vsock(int sv[2]) {
   GPR_ASSERT(socketpair(AF_VSOCK, SOCK_STREAM, 0, sv) == 0);
 }
 
-absl::StatusOr<std::vector<grpc_resolved_address>>
-grpc_resolve_vsock_address(absl::string_view name) {
+absl::StatusOr<std::vector<grpc_resolved_address>> grpc_resolve_vsock_address(
+    absl::string_view name) {
   grpc_resolved_address addr;
   grpc_error_handle error = grpc_core::VSockaddrPopulate(name, &addr);
   if (error.ok()) {

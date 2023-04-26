@@ -74,8 +74,10 @@ absl::StatusOr<std::string> GetScheme(
       return "ipv6";
     case AF_UNIX:
       return "unix";
+#ifdef GRPC_HAVE_VSOCK
     case AF_VSOCK:
       return "vsock";
+#endif
     default:
       return absl::InvalidArgumentError(
           absl::StrFormat("Unknown sockaddr family: %d",
@@ -334,6 +336,19 @@ absl::optional<int> ResolvedAddressIsWildcard(
     return absl::nullopt;
   }
 }
+
+#ifdef GRPC_HAVE_VSOCK
+bool ResolvedAddressIsVSock(
+    const EventEngine::ResolvedAddress& resolved_addr) {
+  return resolved_addr.address()->sa_family == AF_VSOCK;
+  return false;
+}
+#else
+bool ResolvedAddressIsVSock(
+    const EventEngine::ResolvedAddress& /*resolved_addr*/) {
+  return false;
+}
+#endif
 
 absl::StatusOr<std::string> ResolvedAddressToNormalizedString(
     const EventEngine::ResolvedAddress& resolved_addr) {

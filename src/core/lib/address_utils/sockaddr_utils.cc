@@ -330,8 +330,10 @@ const char* grpc_sockaddr_get_uri_scheme(
       return "ipv6";
     case GRPC_AF_UNIX:
       return "unix";
+#ifdef GRPC_HAVE_VSOCK
     case GRPC_AF_VSOCK:
       return "vsock";
+#endif
   }
   return nullptr;
 }

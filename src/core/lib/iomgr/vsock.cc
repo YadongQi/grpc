@@ -17,7 +17,7 @@
 //
 #include <grpc/support/port_platform.h>
 
-#include "src/core/lib/iomgr/port.h"
+#include "src/core/lib/iomgr/vsock.h"
 
 #include "absl/strings/str_cat.h"
 
@@ -27,8 +27,8 @@
 #include "src/core/lib/address_utils/parse_address.h"
 #include "src/core/lib/gpr/useful.h"
 #include "src/core/lib/gprpp/crash.h"
+#include "src/core/lib/iomgr/port.h"
 #include "src/core/lib/iomgr/sockaddr.h"
-#include "src/core/lib/iomgr/vsock.h"
 #include "src/core/lib/transport/error_utils.h"
 
 #ifdef GRPC_HAVE_VSOCK
@@ -55,7 +55,5 @@ absl::StatusOr<std::vector<grpc_resolved_address>> grpc_resolve_vsock_address(
   return absl::InvalidArgumentError("VSOCK is not supported.");
 }
 
-int grpc_is_vsock(const grpc_resolved_address* /*resolved_addr*/) {
-  return 0;
-}
+int grpc_is_vsock(const grpc_resolved_address* /*resolved_addr*/) { return 0; }
 #endif

@@ -21,6 +21,8 @@
 #include <sys/un.h>
 #endif
 
+#include <linux/vm_sockets.h>
+
 #include <string>
 
 #include "absl/status/status.h"

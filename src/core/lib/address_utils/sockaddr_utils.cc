@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <inttypes.h>
+#include <linux/vm_sockets.h>
 #include <string.h>
 
 #include <initializer_list>

@@ -16,7 +16,9 @@
 #include "src/core/lib/event_engine/tcp_socket_utils.h"
 
 #include <errno.h>
+#include <linux/vm_sockets.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "absl/strings/str_cat.h"
@@ -135,7 +137,8 @@ absl::StatusOr<EventEngine::ResolvedAddress> UnixAbstractSockaddrPopulate(
 #endif  //  GRPC_HAVE_UNIX_SOCKET
 
 #ifdef GRPC_HAVE_VSOCK
-absl::StatusOr<EventEngine::ResolvedAddress> VSockaddrPopulate(absl::string_view path) {
+absl::StatusOr<EventEngine::ResolvedAddress> VSockaddrPopulate(
+    absl::string_view path) {
   EventEngine::ResolvedAddress resolved_addr;
   memset(const_cast<sockaddr*>(resolved_addr.address()), 0,
          resolved_addr.size());
@@ -275,8 +278,7 @@ TEST(TcpSocketUtilsTest, ResolvedAddressToNormalizedStringTest) {
 #endif
 
 #ifdef GRPC_HAVE_VSOCK
-  EventEngine::ResolvedAddress inputvm =
-      *VSockaddrPopulate("-1:12345");
+  EventEngine::ResolvedAddress inputvm = *VSockaddrPopulate("-1:12345");
   struct sockaddr_vm* sock_vm = reinterpret_cast<struct sockaddr_vm*>(
       const_cast<sockaddr*>(inputvm.address()));
   EXPECT_EQ(ResolvedAddressToNormalizedString(inputvm).value(),

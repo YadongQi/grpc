@@ -16,6 +16,7 @@
 #include "src/core/lib/event_engine/tcp_socket_utils.h"
 
 #include <errno.h>
+#include <linux/vm_sockets.h>
 #ifdef GRPC_HAVE_VSOCK
 #include <linux/vm_sockets.h>
 #endif

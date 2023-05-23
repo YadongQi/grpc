@@ -41,6 +41,7 @@
 #include "src/core/lib/gprpp/host_port.h"
 #include "src/core/lib/gprpp/status_helper.h"
 #include "src/core/lib/iomgr/grpc_if_nametoindex.h"
+#include "src/core/lib/iomgr/port.h"
 #include "src/core/lib/iomgr/sockaddr.h"
 #include "src/core/lib/iomgr/socket_utils.h"
 
@@ -194,8 +195,7 @@ namespace grpc_core {
 
 grpc_error_handle VSockaddrPopulate(
     absl::string_view /* path */, grpc_resolved_address* /* resolved_addr */) {
-  GPR_UNREACHABLE_CODE(
-      return absl::InvalidArgumentError("vsock unsupported."));
+  GPR_UNREACHABLE_CODE(return absl::InvalidArgumentError("vsock unsupported."));
 }
 
 }  // namespace grpc_core

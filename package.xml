@@ -1244,6 +1244,7 @@
     <file baseinstalldir="/" name="src/core/lib/iomgr/endpoint_pair.h" role="src" />
     <file baseinstalldir="/" name="src/core/lib/iomgr/endpoint_pair_posix.cc" role="src" />
     <file baseinstalldir="/" name="src/core/lib/iomgr/endpoint_pair_windows.cc" role="src" />
+    <file baseinstalldir="/" name="src/core/lib/iomgr/endpoint_pair_vsock.cc" role="src" />
     <file baseinstalldir="/" name="src/core/lib/iomgr/error.cc" role="src" />
     <file baseinstalldir="/" name="src/core/lib/iomgr/error.h" role="src" />
     <file baseinstalldir="/" name="src/core/lib/iomgr/error_cfstream.cc" role="src" />

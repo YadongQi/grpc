@@ -62,6 +62,7 @@
 #include "test/core/end2end/fixtures/proxy.h"
 #include "test/core/end2end/fixtures/secure_fixture.h"
 #include "test/core/end2end/fixtures/sockpair_fixture.h"
+#include "test/core/end2end/fixtures/vsockpair_fixture.h"
 #include "test/core/util/port.h"
 #include "test/core/util/test_config.h"
 
@@ -735,6 +736,11 @@ std::vector<CoreTestConfiguration> AllConfigs() {
             [](const ChannelArgs&, const ChannelArgs&) {
               return std::make_unique<SockpairWithMinstackFixture>(
                   ChannelArgs());
+            }},
+        CoreTestConfiguration{
+            "Chttp2VSocketPair", FEATURE_MASK_IS_HTTP2, nullptr,
+            [](const ChannelArgs&, const ChannelArgs&) {
+              return std::make_unique<VSockpairFixture>(ChannelArgs());
             }},
         CoreTestConfiguration{
             "Inproc",

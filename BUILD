@@ -1241,6 +1241,7 @@ grpc_cc_library(
         "//src/core:lib/iomgr/endpoint_cfstream.cc",
         "//src/core:lib/iomgr/endpoint_pair_posix.cc",
         "//src/core:lib/iomgr/endpoint_pair_windows.cc",
+        "//src/core:lib/iomgr/endpoint_pair_vsock.cc",
         "//src/core:lib/iomgr/error_cfstream.cc",
         "//src/core:lib/iomgr/ev_apple.cc",
         "//src/core:lib/iomgr/ev_epoll1_linux.cc",

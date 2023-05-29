@@ -1356,6 +1356,7 @@ Pod::Spec.new do |s|
                       'src/core/lib/iomgr/endpoint_pair.h',
                       'src/core/lib/iomgr/endpoint_pair_posix.cc',
                       'src/core/lib/iomgr/endpoint_pair_windows.cc',
+                      'src/core/lib/iomgr/endpoint_pair_vsock.cc',
                       'src/core/lib/iomgr/error.cc',
                       'src/core/lib/iomgr/error.h',
                       'src/core/lib/iomgr/error_cfstream.cc',

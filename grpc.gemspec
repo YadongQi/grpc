@@ -1262,6 +1262,7 @@ Gem::Specification.new do |s|
   s.files += %w( src/core/lib/iomgr/endpoint_pair.h )
   s.files += %w( src/core/lib/iomgr/endpoint_pair_posix.cc )
   s.files += %w( src/core/lib/iomgr/endpoint_pair_windows.cc )
+  s.files += %w( src/core/lib/iomgr/endpoint_pair_vsock.cc )
   s.files += %w( src/core/lib/iomgr/error.cc )
   s.files += %w( src/core/lib/iomgr/error.h )
   s.files += %w( src/core/lib/iomgr/error_cfstream.cc )

@@ -2104,6 +2104,7 @@ add_library(grpc
   src/core/lib/iomgr/endpoint_cfstream.cc
   src/core/lib/iomgr/endpoint_pair_posix.cc
   src/core/lib/iomgr/endpoint_pair_windows.cc
+  src/core/lib/iomgr/endpoint_pair_vsock.cc
   src/core/lib/iomgr/error.cc
   src/core/lib/iomgr/error_cfstream.cc
   src/core/lib/iomgr/ev_apple.cc
@@ -2797,6 +2798,7 @@ add_library(grpc_unsecure
   src/core/lib/iomgr/endpoint_cfstream.cc
   src/core/lib/iomgr/endpoint_pair_posix.cc
   src/core/lib/iomgr/endpoint_pair_windows.cc
+  src/core/lib/iomgr/endpoint_pair_vsock.cc
   src/core/lib/iomgr/error.cc
   src/core/lib/iomgr/error_cfstream.cc
   src/core/lib/iomgr/ev_apple.cc
@@ -4317,6 +4319,7 @@ add_library(grpc_authorization_provider
   src/core/lib/iomgr/endpoint_cfstream.cc
   src/core/lib/iomgr/endpoint_pair_posix.cc
   src/core/lib/iomgr/endpoint_pair_windows.cc
+  src/core/lib/iomgr/endpoint_pair_vsock.cc
   src/core/lib/iomgr/error.cc
   src/core/lib/iomgr/error_cfstream.cc
   src/core/lib/iomgr/ev_apple.cc
@@ -11511,6 +11514,7 @@ add_executable(frame_test
   src/core/lib/iomgr/endpoint_cfstream.cc
   src/core/lib/iomgr/endpoint_pair_posix.cc
   src/core/lib/iomgr/endpoint_pair_windows.cc
+  src/core/lib/iomgr/endpoint_pair_vsock.cc
   src/core/lib/iomgr/error.cc
   src/core/lib/iomgr/error_cfstream.cc
   src/core/lib/iomgr/ev_apple.cc

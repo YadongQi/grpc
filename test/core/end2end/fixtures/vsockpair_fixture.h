@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GRPC_TEST_CORE_END2END_FIXTURES_VSOCKPAIR_FIXTURE_H
-#define GRPC_TEST_CORE_END2END_FIXTURES_VSOCKPAIR_FIXTURE_H
+#ifndef GRPC_TEST_CORE_END2END_FIXTURES_SOCKPAIR_FIXTURE_H
+#define GRPC_TEST_CORE_END2END_FIXTURES_SOCKPAIR_FIXTURE_H
 
 #include <utility>
 
@@ -45,12 +45,12 @@
 
 namespace grpc_core {
 
-class SockpairFixture : public CoreTestFixture {
+class VSockpairFixture : public CoreTestFixture {
  public:
-  explicit SockpairFixture(const ChannelArgs& ep_args)
-      : ep_(grpc_iomgr_create_endpoint_pair("fixture", ep_args.ToC().get())) {}
+  explicit VSockpairFixture(const ChannelArgs& ep_args)
+      : ep_(grpc_iomgr_create_endpoint_vsock_pair("fixture", ep_args.ToC().get())) {}
 
-  ~SockpairFixture() override {
+  ~VSockpairFixture() override {
     ExecCtx exec_ctx;
     if (ep_.client != nullptr) {
       grpc_endpoint_shutdown(ep_.client, absl::InternalError("done"));
@@ -123,4 +123,4 @@ class SockpairFixture : public CoreTestFixture {
 };
 }  // namespace grpc_core
 
-#endif  // GRPC_TEST_CORE_END2END_FIXTURES_VSOCKPAIR_FIXTURE_H
+#endif  // GRPC_TEST_CORE_END2END_FIXTURES_SOCKPAIR_FIXTURE_H

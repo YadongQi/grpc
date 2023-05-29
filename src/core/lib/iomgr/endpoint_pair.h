@@ -31,4 +31,7 @@ struct grpc_endpoint_pair {
 grpc_endpoint_pair grpc_iomgr_create_endpoint_pair(
     const char* name, const grpc_channel_args* args);
 
+grpc_endpoint_pair grpc_iomgr_create_endpoint_vsock_pair(
+    const char* name, const grpc_channel_args* args);
+
 #endif  // GRPC_SRC_CORE_LIB_IOMGR_ENDPOINT_PAIR_H
